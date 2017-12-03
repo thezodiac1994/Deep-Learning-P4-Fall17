@@ -3,7 +3,7 @@ import scipy as sp
 import cv2
 import numpy as np
 
-labelFile = pd.read_csv('attributes.csv',);
+labelFile = pd.read_csv('attributes.csv');
 outputLabel = 'Eyeglasses'
 nameLabel = 'image_name'
 labels = labelFile[:][outputLabel]
