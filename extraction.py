@@ -3,7 +3,7 @@ import scipy as sp
 import cv2
 import numpy as np
 
-labelFile = pd.read_csv('attributes.csv');
+labelFile = pd.read_csv('attributes.csv',);
 outputLabel = 'Eyeglasses'
 nameLabel = 'image_name'
 labels = labelFile[:][outputLabel]
@@ -16,12 +16,18 @@ validationFraction = int(0.9 * dataFraction)
 def extractLabels():
 
     # labels for different sets
-    trainLabels = labels[0 : trainFraction]
-    trainLabels.to_csv('trainingLabels.csv', sep=',')
+    trainingLabels = labels[0 : trainFraction]
+    #trainingLabels.to_csv('trainingLabels.csv', sep=',',header='None')
+    np.save('trainingLabels', trainingLabels.values)
+
     validationLabels = labels[trainFraction : validationFraction]
-    validationLabels.to_csv('validationLabels.csv', sep=',')
+    #validationLabels.to_csv('validationLabels.csv', sep=',',header='None')
+    np.save('validationLabels', validationLabels.values)
+
     testingLabels = labels[validationFraction : dataFraction]
-    testingLabels.to_csv('testingLabels.csv', sep=',')
+    #testingLabels.to_csv('testingLabels.csv', sep=',',header='None')
+    np.save('testingLabels',testingLabels.values)
+
 
 def readImages():
     #relative path append to paths -> '../img/'
