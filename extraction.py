@@ -71,7 +71,7 @@ def readImages():
         testingVectors = np.vstack([testingVectors, flattenedImg]);
         print(ipath)
 
-    np.save('testingVectors', validationVectors)
+    np.save('testingVectors', testingVectors)
     #np.savetxt('testingVectors.csv', testingVectors, delimiter=',')
 
 
