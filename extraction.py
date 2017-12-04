@@ -6,7 +6,16 @@ import numpy as np
 labelFile = pd.read_csv('attributes.csv');
 outputLabel = 'Eyeglasses'
 nameLabel = 'image_name'
+
 labels = labelFile[:][outputLabel]
+labels = labels.tolist()
+labels1 = [1 if i==0 else 0 for i in labels]
+
+labels = np.array(labels)
+labels1 = np.array(labels1)
+labels = np.vstack([labels1,labels])
+labels = labels.T
+
 paths = labelFile[:][nameLabel]
 dataFraction = int(.01 * len(labels))  # fraction of data to be used -> set to .01 when using on local system (1%)
 trainFraction = int(0.8 * dataFraction)
@@ -18,15 +27,15 @@ def extractLabels():
     # labels for different sets
     trainingLabels = labels[0 : trainFraction]
     #trainingLabels.to_csv('trainingLabels.csv', sep=',',header='None')
-    np.save('trainingLabels', trainingLabels.values)
+    np.save('trainingLabels', trainingLabels)
 
     validationLabels = labels[trainFraction : validationFraction]
     #validationLabels.to_csv('validationLabels.csv', sep=',',header='None')
-    np.save('validationLabels', validationLabels.values)
+    np.save('validationLabels', validationLabels)
 
     testingLabels = labels[validationFraction : dataFraction]
     #testingLabels.to_csv('testingLabels.csv', sep=',',header='None')
-    np.save('testingLabels',testingLabels.values)
+    np.save('testingLabels',testingLabels)
 
 
 def readImages():
@@ -44,7 +53,7 @@ def readImages():
         img = cv2.resize(img, (59, 73))
         flattenedImg = img.flatten()
         trainVectors = np.vstack([trainVectors, flattenedImg]);
-        print(ipath)
+        #print(ipath)
 
     np.save('trainingVectors', trainVectors)
     #np.savetxt('trainingVectors.csv', trainVectors, delimiter = ',')
@@ -57,7 +66,7 @@ def readImages():
         img = cv2.resize(img, (59, 73))
         flattenedImg = img.flatten()
         validationVectors = np.vstack([validationVectors, flattenedImg]);
-        print(ipath)
+        #print(ipath)
 
     np.save('validationVectors', validationVectors)
     #np.savetxt('validationVectors.csv', validationVectors, delimiter = ',')
@@ -69,7 +78,7 @@ def readImages():
         img = cv2.resize(img, (59, 73))
         flattenedImg = img.flatten()
         testingVectors = np.vstack([testingVectors, flattenedImg]);
-        print(ipath)
+        #print(ipath)
 
     np.save('testingVectors', testingVectors)
     #np.savetxt('testingVectors.csv', testingVectors, delimiter=',')
